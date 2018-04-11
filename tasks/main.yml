@@ -1,0 +1,47 @@
+---
+- name: add user
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    groups: "{{ item.groups }}"
+  with_items: "{{ users }}"
+
+- name: setup keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+  with_items: "{{ users }}"
+
+- name: debian common packages
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items: "{{ common_packages }}"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: redhat common packages
+  yum:
+    pkg: "{{ item }}"
+    state: installed
+  with_items: "{{ common_packages }}"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+  with_items: "{{ users }}"
+
+- name: user removal
+  user:
+    name: "{{item.name}}"
+    state: absent
+  with_items: "{{ users_deleted }}"

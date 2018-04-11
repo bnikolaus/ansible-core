@@ -1,0 +1,17 @@
+---
+# defaults file for core
+common_packages:
+  - "vim"
+  - "@Development tools"
+  - "python-devel"
+
+users:
+  - name: "ansible"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6WnMfe+Pb06vkDga5S0z/kjRvFAkudzsbtRq2n7gKeG9v8MjY601h6EFuc/cmtv6DCtFpNYK31GgAI54L7qK10+B5yNVa3Oszc8TiyoL8lW/aVDtbt3uj3Ax0ZXDNp+eD1s5DsYEiDUvN6bWyUjBFH9efBSUD8Ntgrqty/msOYK0sSlryvwYmDLqVAzyaAibQUUA36T86SxH56HMKL5XltNsMs1aA2WLjCyS1sieftD4bLPyBs6sZMr7nxf6rpGtoFWrkL3HXzizBUpFbuA76OXunu/eZd246Nu4uEf6BJ++1GOJvM2+BywgIJUloLWc1pqObTiXO6whh+fFsGHvx ansible@nowhere"
+    password: "ansible"
+    uid: 9999
+    groups: "wheel"
+    comment: "none"
+    
+users_deleted:
+  - name: "notansible"
